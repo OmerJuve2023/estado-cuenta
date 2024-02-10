@@ -1,0 +1,25 @@
+{
+  "name": "estado-cuenta",
+  "version": "1.0.0",
+  "description": "A simple Node.js app using MySQL",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "omerSolutions23@hotmail.com",
+  "License": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.1",
+    "express": "^4.18.2",
+    "express-handlebars": "^7.1.2",
+    "morgan": "^1.10.0",
+    "mysql": "^2.18.1",
+    "mysql2": "^3.9.1",
+    "sequelize": "^6.36.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.3"
+  }
+}
