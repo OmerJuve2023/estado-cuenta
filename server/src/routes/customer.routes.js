@@ -9,7 +9,7 @@ router.get("/add", (req, res) => {
 
 router.get('/list', async (req, res) => {
     try {
-        const [result] = await pool.query('SELECT * FROM customer');
+        const [result] = await pool.query('SELECT * FROM product');
         res.render('personas/list', {personas: result});
     } catch (err) {
         res.status(500).json({message: err.message});

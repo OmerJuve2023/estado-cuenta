@@ -1,4 +1,3 @@
-// models/Payment.js
 const {DataTypes} = require('sequelize');
 const sequelize = require("server/src/database/query.sql");
 
