@@ -6,6 +6,7 @@ import indexRoutes from "./routes/index.routes.js";
 import productRoutes from "./routes/product.routes.js";
 import orderRoutes from "./routes/order.routes.js";
 import orderDetailRoutes from "./routes/orderDetail.routes.js";
+import paymentRoutes from "./routes/payment.routes.js";
 
 const app = express();
 
@@ -18,7 +19,7 @@ app.use("/api/index", indexRoutes);
 app.use("/api/product", productRoutes);
 app.use("/api/order", orderRoutes);
 app.use("/api/orderDetail", orderDetailRoutes);
-
+app.use("/api/payment", paymentRoutes);
 
 app.listen(PORT);
 console.log(`Server on port http://localhost:${PORT}`);
