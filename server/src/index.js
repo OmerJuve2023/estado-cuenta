@@ -3,6 +3,7 @@ import express from "express";
 import bodyParser from "body-parser";
 import customerRoutes from "./routes/customer.routes.js";
 import indexRoutes from "./routes/index.routes.js";
+import productRoutes from "./routes/product.routes.js";
 
 const app = express();
 
@@ -12,6 +13,6 @@ app.use(bodyParser.json());
 
 app.use("/api/customer", customerRoutes);
 app.use("/api/index", indexRoutes);
-
+app.use("/api/product", productRoutes);
 app.listen(PORT);
 console.log(`Server on port http://localhost:${PORT}`);
