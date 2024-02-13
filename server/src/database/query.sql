@@ -1,42 +1,44 @@
-create
-database if not exists estado_cuenta;
+-- Iniciar una transacción
+START TRANSACTION;
 
-use
-estado_cuenta;
+-- Crear la base de datos si no existe
+CREATE DATABASE IF NOT EXISTS estado_cuenta;
 
--- Tabla para almacenar la información de los clientes
-CREATE TABLE customer
+-- Seleccionar la base de datos
+USE estado_cuenta;
+
+-- Crear tabla de clientes si no existe
+CREATE TABLE IF NOT EXISTS customer
 (
     id      INT AUTO_INCREMENT PRIMARY KEY,
     name    VARCHAR(100) NOT NULL,
     email   VARCHAR(100) NOT NULL,
     phone   VARCHAR(20),
     address VARCHAR(255)
-);
+    );
 
-
--- Tabla para almacenar la información de los productos disponibles
-CREATE TABLE product
+-- Crear tabla de productos si no existe
+CREATE TABLE IF NOT EXISTS product
 (
     id          INT AUTO_INCREMENT PRIMARY KEY,
     name        VARCHAR(100)   NOT NULL,
     price       DECIMAL(10, 2) NOT NULL,
     description TEXT
-);
+    );
 
--- Tabla para los pedidos realizados por los clientes
-CREATE TABLE `order`
+-- Crear tabla de pedidos si no existe
+CREATE TABLE IF NOT EXISTS `order`
 (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     customer_id  INT,
-    order_date   DATE           NOT NULL,
-    total_amount DECIMAL(10, 2) NOT NULL,
-    status       ENUM('pending', 'completed', 'cancelled') NOT NULL,
+    order_date   DATE                                       NOT NULL,
+    total_amount DECIMAL(10, 2)                             NOT NULL,
+    status       ENUM ('pending', 'completed', 'cancelled') NOT NULL,
     CONSTRAINT fk_order_customer FOREIGN KEY (customer_id) REFERENCES customer (id)
-);
+    );
 
--- Tabla para los detalles de los pedidos, es decir, los productos incluidos en cada pedido
-CREATE TABLE order_detail
+-- Crear tabla de detalles de pedidos si no existe
+CREATE TABLE IF NOT EXISTS order_detail
 (
     id         INT AUTO_INCREMENT PRIMARY KEY,
     order_id   INT,
@@ -46,14 +48,17 @@ CREATE TABLE order_detail
     subtotal   DECIMAL(10, 2) NOT NULL,
     CONSTRAINT fk_order_detail_order FOREIGN KEY (order_id) REFERENCES `order` (id),
     CONSTRAINT fk_order_detail_product FOREIGN KEY (product_id) REFERENCES product (id)
-);
+    );
 
--- Tabla para los pagos realizados por los clientes
-CREATE TABLE payment
+-- Crear tabla de pagos si no existe
+CREATE TABLE IF NOT EXISTS payment
 (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     order_id     INT,
     amount       DECIMAL(10, 2) NOT NULL,
     payment_date DATE           NOT NULL,
     CONSTRAINT fk_payment_order FOREIGN KEY (order_id) REFERENCES `order` (id)
-);
+    );
+
+-- Hacer commit de la transacción
+COMMIT;
