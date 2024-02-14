@@ -1,11 +1,11 @@
 -- Iniciar una transacción
-START TRANSACTION;
+START TRANSACTION;;
 
 -- Crear la base de datos si no existe
-CREATE DATABASE IF NOT EXISTS estado_cuenta;
+CREATE DATABASE IF NOT EXISTS estado_cuenta;;
 
 -- Seleccionar la base de datos
-USE estado_cuenta;
+USE estado_cuenta;;
 
 -- Crear tabla de clientes si no existe
 CREATE TABLE IF NOT EXISTS customer
@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS customer
     email   VARCHAR(100) NOT NULL,
     phone   VARCHAR(20),
     address VARCHAR(255)
-    );
+    );;
 
 -- Crear tabla de productos si no existe
 CREATE TABLE IF NOT EXISTS product
@@ -24,7 +24,7 @@ CREATE TABLE IF NOT EXISTS product
     name        VARCHAR(100)   NOT NULL,
     price       DECIMAL(10, 2) NOT NULL,
     description TEXT
-    );
+    );;
 
 -- Crear tabla de pedidos si no existe
 CREATE TABLE IF NOT EXISTS `order`
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `order`
     total_amount DECIMAL(10, 2)                             NOT NULL,
     status       ENUM ('pending', 'completed', 'cancelled') NOT NULL,
     CONSTRAINT fk_order_customer FOREIGN KEY (customer_id) REFERENCES customer (id)
-    );
+    );;
 
 -- Crear tabla de detalles de pedidos si no existe
 CREATE TABLE IF NOT EXISTS order_detail
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS order_detail
     subtotal   DECIMAL(10, 2) NOT NULL,
     CONSTRAINT fk_order_detail_order FOREIGN KEY (order_id) REFERENCES `order` (id),
     CONSTRAINT fk_order_detail_product FOREIGN KEY (product_id) REFERENCES product (id)
-    );
+    );;
 
 -- Crear tabla de pagos si no existe
 CREATE TABLE IF NOT EXISTS payment
@@ -58,7 +58,7 @@ CREATE TABLE IF NOT EXISTS payment
     amount       DECIMAL(10, 2) NOT NULL,
     payment_date DATE           NOT NULL,
     CONSTRAINT fk_payment_order FOREIGN KEY (order_id) REFERENCES `order` (id)
-    );
+    );;
 
 -- Hacer commit de la transacción
-COMMIT;
+COMMIT;;
