@@ -1,6 +1,6 @@
 // models/Customer.js
 const {DataTypes} = require('sequelize');
-const sequelize = require("server/src/database/query.sql");
+const sequelize = require("server/src/database/create-tables.data.sql");
 
 const Customer = sequelize.define('Customer', {
     name: {
