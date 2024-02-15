@@ -25,17 +25,16 @@ app.use("/api/payment", paymentRoutes);
 
 
 const filesToExecute = [
-    './src/database/create-tables.data.sql',
-    './src/database/product.procedure.sql',
-    './src/database/customer.procedure.sql',
-    './src/database/order.procedure.sql',
-    './src/database/orderDetail.procedure.sql',
-    './src/database/payment.procedure.sql',
+    './server/src/database/create-tables.data.sql',
+    '/server./src/database/product.procedure.sql',
+    '/server./src/database/customer.procedure.sql',
+    '/server./src/database/order.procedure.sql',
+    '/server./src/database/orderDetail.procedure.sql',
+    '/server./src/database/payment.procedure.sql',
 ];
 
 app.listen(PORT, () => {
     process.env.TZ = 'America/Lima';
     executeSQLScript(filesToExecute);
     console.log(`Servidor Express corriendo en http://localhost:${PORT}`);
-
 });

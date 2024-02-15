@@ -2,11 +2,11 @@
   "name": "estado-cuenta",
   "version": "1.0.0",
   "description": "A simple Node.js app using MySQL",
-  "main": "src/index.js",
+  "main": "server/src/index.js",
   "type": "module",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "nodemon src/index.js"
+    "start": "node server/src/index.js",
+    "dev": "nodemon server/src/index.js"
   },
   "author": "omerSolutions23@hotmail.com",
   "License": "ISC",
