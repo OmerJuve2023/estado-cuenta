@@ -27,11 +27,11 @@ CREATE TABLE IF NOT EXISTS product
     );;
 
 -- Crear tabla de pedidos si no existe
-CREATE TABLE IF NOT EXISTS `order`
+CREATE TABLE IF NOT EXISTS orders
 (
     id           INT AUTO_INCREMENT PRIMARY KEY,
     customer_id  INT,
-    order_date   DATE                                       NOT NULL,
+    order_date   DATETIME                                   NOT NULL,
     total_amount DECIMAL(10, 2)                             NOT NULL,
     status       ENUM ('pending', 'completed', 'cancelled') NOT NULL,
     CONSTRAINT fk_order_customer FOREIGN KEY (customer_id) REFERENCES customer (id)
@@ -46,7 +46,7 @@ CREATE TABLE IF NOT EXISTS order_detail
     quantity   INT            NOT NULL,
     price      DECIMAL(10, 2) NOT NULL,
     subtotal   DECIMAL(10, 2) NOT NULL,
-    CONSTRAINT fk_order_detail_order FOREIGN KEY (order_id) REFERENCES `order` (id),
+    CONSTRAINT fk_order_detail_order FOREIGN KEY (order_id) REFERENCES orders (id),
     CONSTRAINT fk_order_detail_product FOREIGN KEY (product_id) REFERENCES product (id)
     );;
 
@@ -56,8 +56,8 @@ CREATE TABLE IF NOT EXISTS payment
     id           INT AUTO_INCREMENT PRIMARY KEY,
     order_id     INT,
     amount       DECIMAL(10, 2) NOT NULL,
-    payment_date DATE           NOT NULL,
-    CONSTRAINT fk_payment_order FOREIGN KEY (order_id) REFERENCES `order` (id)
+    payment_date DATETIME       NOT NULL,
+    CONSTRAINT fk_payment_order FOREIGN KEY (order_id) REFERENCES orders (id)
     );;
 
 -- Hacer commit de la transacción

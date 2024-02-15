@@ -20,5 +20,7 @@ export const pool = createPool({
     connectionLimit: CONNECTION_LIMIT,
     queueLimit: QUEUE_LIMIT,
     waitForConnections: WAIT_FOR_CONNECTIONS,
-    multipleStatements: MULTIPLE_STATEMENTS
+    multipleStatements: MULTIPLE_STATEMENTS,
+    dateStrings: ['DATE', 'DATETIME'],
+    timezone: 'utc'
 });

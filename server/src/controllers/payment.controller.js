@@ -1,6 +1,6 @@
 import {pool} from "../database/db.js";
 
-export const listPayment=async (req, res) => {
+export const listPayment = async (req, res) => {
     try {
         const [result] = await pool.query("call GetAllPayments()");
         console.log(result);
@@ -9,17 +9,17 @@ export const listPayment=async (req, res) => {
         res.status(500).json({message: err.message});
     }
 }
-export const addPayment=async (req, res) => {
+export const addPayment = async (req, res) => {
     try {
-        const {order_id, amount, payment_date} = req.body;
-        await pool.query("call InsertPayment(?,?,?)", [order_id, amount, payment_date]);
+        const {order_id, amount} = req.body;
+        await pool.query("call InsertPayment(?,?)", [order_id, amount]);
         res.status(201).json({message: "se agregó correctamente el nuevo pago"});
     } catch (err) {
         res.status(500).json({message: err.message});
     }
 }
 
-export const updatePayment= async (req, res) => {
+export const updatePayment = async (req, res) => {
     try {
         const {order_id, amount, payment_date} = req.body;
         const {id} = req.params;
@@ -29,7 +29,7 @@ export const updatePayment= async (req, res) => {
         res.status(500).json({message: err.message});
     }
 }
-export const getPaymentById=async (req, res) => {
+export const getPaymentById = async (req, res) => {
     try {
         const {id} = req.params;
         const [result] = await pool.query("call GetPaymentById(?)", [id]);
@@ -38,7 +38,7 @@ export const getPaymentById=async (req, res) => {
         res.status(500).json({message: err.message});
     }
 }
-export const deletePayment=async (req, res) => {
+export const deletePayment = async (req, res) => {
     try {
         const {id} = req.params;
         await pool.query("call DeletePayment(?)", [id]);

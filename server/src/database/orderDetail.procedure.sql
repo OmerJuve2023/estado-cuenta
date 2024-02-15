@@ -3,13 +3,15 @@ CREATE PROCEDURE IF NOT EXISTS InsertOrderDetail(
     IN p_order_id INT,
     IN p_product_id INT,
     IN p_quantity INT,
-    IN p_price DECIMAL(10, 2),
-    IN p_subtotal DECIMAL(10, 2)
+    IN p_price DECIMAL(10, 2)
 )
 BEGIN
     INSERT INTO order_detail (order_id, product_id, quantity, price, subtotal)
-    VALUES (p_order_id, p_product_id, p_quantity, p_price, p_subtotal);
-END;;
+    VALUES (p_order_id, p_product_id, p_quantity, p_price, (p_quantity * p_price));
+    update orders
+    set total_amount= (SELECT SUM(subtotal) FROM order_detail WHERE order_id = p_order_id)
+    WHERE id = p_order_id;
+END;
 
 CREATE PROCEDURE IF NOT EXISTS GetOrderDetailByID(
     IN p_order_detail_id INT
