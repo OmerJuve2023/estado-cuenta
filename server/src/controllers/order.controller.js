@@ -1,4 +1,5 @@
 import {pool} from "../database/db.js";
+import {or} from "sequelize";
 
 export const listOrder = async (req, res) => {
     try {
@@ -11,8 +12,8 @@ export const listOrder = async (req, res) => {
 }
 export const addOrder = async (req, res) => {
     try {
-        const {customer_id, order_date, quantity, status} = req.body;
-        await pool.query("call InsertOrder(?,?,?,?)", [customer_id, order_date, quantity, status]);
+        const {customer_id, quantity, status} = req.body;
+        await pool.query("call InsertOrder(?,?,?)", [customer_id, quantity, status]);
         res.status(201).json({message: "se agregó correctamente el nuevo pedido"});
     } catch (err) {
         res.status(500).json({message: err.message});

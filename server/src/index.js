@@ -32,7 +32,10 @@ const filesToExecute = [
     './src/database/orderDetail.procedure.sql',
     './src/database/payment.procedure.sql',
 ];
+
 app.listen(PORT, () => {
+    process.env.TZ = 'America/Lima';
     executeSQLScript(filesToExecute);
     console.log(`Servidor Express corriendo en http://localhost:${PORT}`);
+
 });
