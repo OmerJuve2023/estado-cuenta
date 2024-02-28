@@ -29,6 +29,7 @@ export const updateCustomer = async (req, res) => {
         res.status(500).json({message: err.message});
     }
 }
+
 export const getCustomerById = async (req, res) => {
     try {
         const {id} = req.params;

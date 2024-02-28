@@ -12,8 +12,8 @@ export const listOrder = async (req, res) => {
 }
 export const addOrder = async (req, res) => {
     try {
-        const {customer_id, quantity, status} = req.body;
-        await pool.query("call InsertOrder(?,?,?)", [customer_id, quantity, status]);
+        const {customer_id, total_amount, status} = req.body;
+        await pool.query("call InsertOrder(?,?,?)", [customer_id, total_amount, status]);
         res.status(201).json({message: "se agregó correctamente el nuevo pedido"});
     } catch (err) {
         res.status(500).json({message: err.message});
@@ -21,9 +21,9 @@ export const addOrder = async (req, res) => {
 }
 export const updateOrder = async (req, res) => {
     try {
-        const {customer_id, order_date, quantity, status} = req.body;
+        const {customer_id, order_date, total_amount, status} = req.body;
         const {id} = req.params;
-        await pool.query("call UpdateOrder(?,?, ?, ?, ?)", [id, customer_id, order_date, quantity, status]);
+        await pool.query("call UpdateOrder(?,?, ?, ?, ?)", [id, customer_id, order_date, total_amount, status]);
         res.status(202).json({message: "se actualizó correctamente el pedido"});
     } catch (err) {
         res.status(500).json({message: err.message});
