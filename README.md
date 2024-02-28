@@ -1,4 +1,4 @@
-# Estado-cuenta
+# Estado-cuenta Backend
 
 Sistema de pedidos donde las personas puedan realizar un pedido de productos y luego pagar en cuotas o de acuerdo a
 algún plan de pago.
