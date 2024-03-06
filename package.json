@@ -1,6 +1,6 @@
 {
   "name": "estado-cuenta",
-  "version": "1.0.2",
+  "version": "1.0.5",
   "description": "A simple Node.js app using MySQL",
   "main": "server/src/index.js",
   "type": "module",
