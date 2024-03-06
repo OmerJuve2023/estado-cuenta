@@ -2,7 +2,7 @@ import {pool} from "../database/db.js";
 
 export const listOrderDetails = async (req, res) => {
     try {
-        const [result] = await pool.query("call GetAllOrderDetails()");
+        const [result] = await pool.query("call GetAllOrderDetailsByName()");
         console.log(result);
         res.send(result[0]);
     } catch (err) {
@@ -23,7 +23,7 @@ export const updateOrderDetail = async (req, res) => {
     try {
         const {order_id, product_id, quantity, price} = req.body;
         const {id} = req.params;
-        await pool.query("call UpdateOrderDetail(?,?, ?, ?, ?,?)", [id, order_id, product_id, quantity, price, (quantity * price)]);
+        await pool.query("call UpdateOrderDetail(?, ?, ?, ?, ?)", [id, order_id, product_id, quantity, price]);
         res.status(202).json({message: "se actualizó correctamente el detalle de pedido"});
     } catch (err) {
         res.status(500).json({message: err.message});

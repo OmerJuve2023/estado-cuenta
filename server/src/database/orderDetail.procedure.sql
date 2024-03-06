@@ -25,8 +25,7 @@ CREATE PROCEDURE IF NOT EXISTS UpdateOrderDetail(
     IN p_order_id INT,
     IN p_product_id INT,
     IN p_quantity INT,
-    IN p_price DECIMAL(10, 2),
-    IN p_subtotal DECIMAL(10, 2)
+    IN p_price DECIMAL(10, 2)
 )
 BEGIN
     UPDATE order_detail
@@ -34,7 +33,7 @@ BEGIN
         product_id = p_product_id,
         quantity   = p_quantity,
         price      = p_price,
-        subtotal   = p_subtotal
+        subtotal   = (p_quantity * p_price)
     WHERE id = p_order_detail_id;
 END;;
 
@@ -48,4 +47,20 @@ END;;
 CREATE PROCEDURE IF NOT EXISTS GetAllOrderDetails()
 BEGIN
     SELECT * FROM order_detail;
+END;;
+
+CREATE PROCEDURE IF NOT EXISTS GetAllOrderDetailsByName()
+BEGIN
+    select od.id,
+           od.order_id,
+           od.product_id,
+           c.name as "customer",
+           p.name as "product",
+           od.quantity,
+           od.price,
+           od.subtotal
+    from order_detail od
+             join orders o on od.order_id = o.id
+             join product p on od.product_id = p.id
+             join customer c on o.customer_id = c.id;
 END;;

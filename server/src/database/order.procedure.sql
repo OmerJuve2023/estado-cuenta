@@ -44,3 +44,10 @@ CREATE PROCEDURE IF NOT EXISTS GetAllOrders()
 BEGIN
     SELECT * FROM orders;
 END;;
+
+CREATE PROCEDURE IF NOT EXISTS GetAllOrdersByName()
+BEGIN
+    SELECT o.id, o.customer_id, c.name, o.total_amount, o.order_date, o.status
+    FROM orders o
+             JOIN customer c ON o.customer_id = c.id;
+END ;;

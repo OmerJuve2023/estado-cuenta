@@ -3,7 +3,7 @@ import {or} from "sequelize";
 
 export const listOrder = async (req, res) => {
     try {
-        const [result] = await pool.query("call GetAllOrders()");
+        const [result] = await pool.query("call GetAllOrdersByName()");
         console.log(result);
         res.send(result[0]);
     } catch (err) {
