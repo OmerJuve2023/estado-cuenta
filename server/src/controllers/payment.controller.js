@@ -2,7 +2,7 @@ import {pool} from "../database/db.js";
 
 export const listPayment = async (req, res) => {
     try {
-        const [result] = await pool.query("call GetAllPayments()");
+        const [result] = await pool.query("call GetAllPaymentsByName()");
         console.log(result);
         res.send(result[0]);
     } catch (err) {
