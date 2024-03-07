@@ -37,3 +37,7 @@ BEGIN
     DELETE FROM product WHERE id = p_id;
 END;;
 
+CREATE PROCEDURE IF NOT EXISTS GetProductByName()
+BEGIN
+    select p.id, p.name from product p;
+END;;
