@@ -52,6 +52,9 @@ BEGIN
     IF total_paid >= total_order THEN
         -- Actualizar el estado del pedido a "completed"
         UPDATE orders SET status = 'completed' WHERE id = p_order_id;
+    ELSE
+        -- Actualizar el estado del pedido a "pending"
+        UPDATE orders SET status = 'pending' WHERE id = p_order_id;
     END IF;
 
 END;;

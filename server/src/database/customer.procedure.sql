@@ -38,3 +38,8 @@ CREATE PROCEDURE IF NOT EXISTS DeleteCustomer(
 BEGIN
     DELETE FROM customer WHERE id = p_id;
 END;;
+
+CREATE PROCEDURE IF NOT EXISTS GetCustomersByName()
+BEGIN
+    select c.id, c.name from customer c;
+END;;
