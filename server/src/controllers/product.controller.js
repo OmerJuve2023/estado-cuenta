@@ -47,3 +47,11 @@ export const deleteProduct = async (req, res) => {
         res.status(500).json({message: err.message});
     }
 }
+export const getProductByName = async (req, res) => {
+    try {
+        const [result] = await pool.query("call GetProductByName()");
+        res.send(result[0]);
+    } catch (err) {
+        res.status(500).json({message: err.message});
+    }
+}

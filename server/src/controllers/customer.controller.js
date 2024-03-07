@@ -3,7 +3,6 @@ import {pool} from "../database/db.js";
 export const listCustomers = async (req, res) => {
     try {
         const [result] = await pool.query("call GetAllCustomers()");
-        console.log(result);
         res.send(result[0]);
     } catch (err) {
         res.status(500).json({message: err.message});
@@ -44,6 +43,14 @@ export const deleteCustomer = async (req, res) => {
         const {id} = req.params;
         await pool.query("call DeleteCustomer(?)", [id]);
         res.status(200).json({message: "se eliminó correctamente el usuario"});
+    } catch (err) {
+        res.status(500).json({message: err.message});
+    }
+}
+export const getCustomerByName = async (req, res) => {
+    try {
+        const [result] = await pool.query("call GetCustomersByName()");
+        res.send(result[0]);
     } catch (err) {
         res.status(500).json({message: err.message});
     }
