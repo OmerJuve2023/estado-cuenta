@@ -51,3 +51,10 @@ BEGIN
     FROM orders o
              JOIN customer c ON o.customer_id = c.id;
 END ;;
+
+CREATE PROCEDURE IF NOT EXISTS GetOrderByAvailable()
+BEGIN
+    select distinct c.id,c.name
+    from customer c
+             join orders o on c.id = o.customer_id;
+END;;
