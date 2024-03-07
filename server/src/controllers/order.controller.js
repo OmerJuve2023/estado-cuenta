@@ -47,3 +47,12 @@ export const deleteOrder = async (req, res) => {
         res.status(500).json({message: err.message});
     }
 }
+
+export const getOrderByAvailable = async (req, res) => {
+    try {
+        const [result] = await pool.query("call GetOrderByAvailable()");
+        res.send(result[0]);
+    } catch (err) {
+        res.status(500).json({message: err.message});
+    }
+}
