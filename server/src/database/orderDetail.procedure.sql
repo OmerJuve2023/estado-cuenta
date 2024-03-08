@@ -23,36 +23,37 @@ BEGIN
 END;;
 
 CREATE PROCEDURE IF NOT EXISTS UpdateOrderDetail(
+    IN p_id INT,
     IN p_order_id INT,
     IN p_product_id INT,
     IN p_quantity INT
 )
 BEGIN
-    DECLARE existing_record INT;
+    DECLARE v_price DECIMAL(10, 2);
+    DECLARE v_subtotal DECIMAL(10, 2);
 
-    -- Check if a record exists
-    SELECT COUNT(*) INTO existing_record
-    FROM order_detail
-    WHERE order_id = p_order_id AND product_id = p_product_id;
+    -- Obtener el precio del producto del detalle del pedido
+    SELECT price
+    INTO v_price
+    FROM product
+    WHERE id = p_product_id;
 
-    IF existing_record > 0 THEN
-        -- Update existing record
-        UPDATE order_detail
-        SET quantity = p_quantity,
-            price = (SELECT price FROM product WHERE id = p_product_id),
-            subtotal = (p_quantity * (SELECT price FROM product WHERE id = p_product_id))
-        WHERE order_id = p_order_id AND product_id = p_product_id;
-    ELSE
-        -- Insert new record (same logic as before)
-        INSERT INTO order_detail(order_id, product_id, quantity, price, subtotal)
-        SELECT p_order_id, p_product_id, p_quantity, p.price, (p_quantity * p.price)
-        FROM product p
-        WHERE p.id = p_product_id;
-    END IF;
+    -- Calcular el subtotal basado en la nueva cantidad y el precio del producto
+    SET v_subtotal = p_quantity * v_price;
 
-    -- Update total_amount in orders table (assuming foreign key relationship)
+    -- Actualizar el detalle del pedido con los nuevos valores
+    UPDATE order_detail
+    SET product_id = p_product_id,
+        quantity   = p_quantity,
+        price      = v_price,
+        subtotal   = v_subtotal
+    WHERE id = p_id;
+
+    -- Actualizar el total_amount en la orden correspondiente
     UPDATE orders
-    SET total_amount = (SELECT SUM(subtotal) FROM order_detail WHERE order_id = p_order_id)
+    SET total_amount = (SELECT SUM(subtotal)
+                        FROM order_detail
+                        WHERE order_id = p_order_id)
     WHERE id = p_order_id;
 END;;
 
