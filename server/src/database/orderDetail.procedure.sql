@@ -2,16 +2,18 @@ use estado_cuenta;;
 CREATE PROCEDURE IF NOT EXISTS InsertOrderDetail(
     IN p_order_id INT,
     IN p_product_id INT,
-    IN p_quantity INT,
-    IN p_price DECIMAL(10, 2)
+    IN p_quantity INT
 )
 BEGIN
-    INSERT INTO order_detail (order_id, product_id, quantity, price, subtotal)
-    VALUES (p_order_id, p_product_id, p_quantity, p_price, (p_quantity * p_price));
-    update orders
-    set total_amount= (SELECT SUM(subtotal) FROM order_detail WHERE order_id = p_order_id)
+    INSERT INTO order_detail(order_id, product_id, quantity, price, subtotal)
+    SELECT p_order_id, p_product_id, p_quantity, p.price, (p_quantity * p.price)
+    FROM product p
+    WHERE p.id = p_product_id;
+
+    UPDATE orders
+    SET total_amount= (SELECT SUM(subtotal) FROM order_detail WHERE order_id = p_order_id)
     WHERE id = p_order_id;
-END;
+END;;
 
 CREATE PROCEDURE IF NOT EXISTS GetOrderDetailByID(
     IN p_order_detail_id INT
@@ -21,20 +23,37 @@ BEGIN
 END;;
 
 CREATE PROCEDURE IF NOT EXISTS UpdateOrderDetail(
-    IN p_order_detail_id INT,
     IN p_order_id INT,
     IN p_product_id INT,
-    IN p_quantity INT,
-    IN p_price DECIMAL(10, 2)
+    IN p_quantity INT
 )
 BEGIN
-    UPDATE order_detail
-    SET order_id   = p_order_id,
-        product_id = p_product_id,
-        quantity   = p_quantity,
-        price      = p_price,
-        subtotal   = (p_quantity * p_price)
-    WHERE id = p_order_detail_id;
+    DECLARE existing_record INT;
+
+    -- Check if a record exists
+    SELECT COUNT(*) INTO existing_record
+    FROM order_detail
+    WHERE order_id = p_order_id AND product_id = p_product_id;
+
+    IF existing_record > 0 THEN
+        -- Update existing record
+        UPDATE order_detail
+        SET quantity = p_quantity,
+            price = (SELECT price FROM product WHERE id = p_product_id),
+            subtotal = (p_quantity * (SELECT price FROM product WHERE id = p_product_id))
+        WHERE order_id = p_order_id AND product_id = p_product_id;
+    ELSE
+        -- Insert new record (same logic as before)
+        INSERT INTO order_detail(order_id, product_id, quantity, price, subtotal)
+        SELECT p_order_id, p_product_id, p_quantity, p.price, (p_quantity * p.price)
+        FROM product p
+        WHERE p.id = p_product_id;
+    END IF;
+
+    -- Update total_amount in orders table (assuming foreign key relationship)
+    UPDATE orders
+    SET total_amount = (SELECT SUM(subtotal) FROM order_detail WHERE order_id = p_order_id)
+    WHERE id = p_order_id;
 END;;
 
 CREATE PROCEDURE IF NOT EXISTS DeleteOrderDetail(
