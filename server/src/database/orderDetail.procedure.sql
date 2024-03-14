@@ -84,3 +84,11 @@ BEGIN
              join product p on od.product_id = p.id
              join customer c on o.customer_id = c.id;
 END;;
+
+CREATE PROCEDURE GetOrderDetailsHome(IN orderID INT)
+BEGIN
+    SELECT od.id, od.order_id, p.name, od.price, od.quantity, od.subtotal
+    FROM order_detail od
+             JOIN product p ON p.id = od.product_id
+    WHERE od.order_id = orderID;
+END;;
