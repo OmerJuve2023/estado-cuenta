@@ -85,7 +85,7 @@ BEGIN
              join customer c on o.customer_id = c.id;
 END;;
 
-CREATE PROCEDURE GetOrderDetailsHome(IN orderID INT)
+CREATE PROCEDURE IF NOT EXISTS GetOrderDetailsHome(IN orderID INT)
 BEGIN
     SELECT od.id, od.order_id, p.name, od.price, od.quantity, od.subtotal
     FROM order_detail od
