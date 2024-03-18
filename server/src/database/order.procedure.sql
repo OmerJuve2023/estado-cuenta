@@ -58,3 +58,11 @@ BEGIN
     from customer c
              join orders o on c.id = o.customer_id;
 END;;
+
+CREATE PROCEDURE IF NOT EXISTS GetOrderToNameByOrderID(IN orderID INT)
+BEGIN
+    SELECT c.name
+    FROM orders o
+             JOIN customer c ON c.id = o.customer_id
+    WHERE o.id = orderID;
+END;;
