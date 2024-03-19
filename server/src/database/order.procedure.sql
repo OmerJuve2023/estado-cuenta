@@ -66,3 +66,10 @@ BEGIN
              JOIN customer c ON c.id = o.customer_id
     WHERE o.id = orderID;
 END;;
+
+CREATE PROCEDURE IF NOT EXISTS GetOrderByAllName()
+BEGIN
+    SELECT DISTINCT c.name, c.id
+    FROM orders o
+             JOIN customer c ON c.id = o.customer_id;
+END;;
