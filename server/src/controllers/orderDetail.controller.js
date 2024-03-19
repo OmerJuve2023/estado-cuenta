@@ -50,7 +50,15 @@ export const deleteOrderDetail = async (req, res) => {
 export const getHome = async (req, res) => {
     try {
         const {id} = req.params;
-        const [result] = await pool.query("call GetOrderDetailsHome(?)",[id]);
+        const [result] = await pool.query("call GetOrderDetailsHome(?)", [id]);
+        res.send(result[0]);
+    } catch (err) {
+        res.status(500).json({message: err.message});
+    }
+}
+export const getOrderByAllName = async (req, res) => {
+    try {
+        const [result] = await pool.query("call GetOrderByAllName()");
         res.send(result[0]);
     } catch (err) {
         res.status(500).json({message: err.message});
