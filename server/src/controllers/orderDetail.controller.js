@@ -56,11 +56,3 @@ export const getHome = async (req, res) => {
         res.status(500).json({message: err.message});
     }
 }
-export const getOrderByAllName = async (req, res) => {
-    try {
-        const [result] = await pool.query("call GetOrderByAllName()");
-        res.send(result[0]);
-    } catch (err) {
-        res.status(500).json({message: err.message});
-    }
-}
