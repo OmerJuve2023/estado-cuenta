@@ -66,3 +66,12 @@ export const getOrderByOrderToName = async (req, res) => {
         res.status(500).json({message: err.message});
     }
 }
+export const getOrderByIdCustomer = async (req, res) => {
+    try {
+        const {id} = req.params;
+        const [result] = await pool.query("call GetOrderByIdCustomer(?)", [id]);
+        res.send(result[0]);
+    } catch (err) {
+        res.status(500).json({message: err.message});
+    }
+}

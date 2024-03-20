@@ -73,3 +73,10 @@ BEGIN
     FROM orders o
              JOIN customer c ON c.id = o.customer_id;
 END;;
+
+CREATE PROCEDURE IF NOT EXISTS GetOrderByIdCustomer(IN customerID INT)
+BEGIN
+    SELECT o.id, o.order_date, o.total_amount,o.status
+    FROM orders o
+    WHERE o.customer_id = customerID;
+END;;
