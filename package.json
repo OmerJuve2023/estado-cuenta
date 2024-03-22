@@ -20,7 +20,7 @@
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.9.1",
-    "sequelize": "^6.37.0",
+    "sequelize": "^6.37.1",
     "cors": "^2.8.5"
   },
   "devDependencies": {
