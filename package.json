@@ -16,7 +16,7 @@
     "dotenv": "^16.4.5",
     "execsql": "^0.0.3",
     "express": "^4.18.2",
-    "express-handlebars": "^7.1.2",
+    "express-handlebars": "^8.0.4",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
     "mysql2": "^3.9.1",
